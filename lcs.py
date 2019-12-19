@@ -16,31 +16,24 @@ def lcs_bf(x,y):
 
 
 def lcs(x,y):
-  lcs=np.zeros(len(x)*len(y),dtype=int).reshape(len(x),len(y))
-  for i in range(1,len(x)):
-    for j in range(1,len(y)):
-      if x[i] == y[j]:
-        lcs[i][j] = lcs[i-1][j-1] + 1
+  L = [[0]*(len(y)+1) for _ in range(len(x)+1)]
+  for i,x_elem in enumerate(x):
+    for j,y_elem in enumerate(y):
+      if x_elem == y_elem:
+        L[i][j] = L[i-1][j-1] + 1
       else:
-        if lcs[i-1][j] >= lcs[i][j-1]:
-          lcs[i][j] = lcs[i-1][j]
-        else:
-          lcs[i][j] = lcs[i][j-1]
-  i = len(x)-1
-  j = len(y)-1
+        L[i][j] = max((L[i][j-1],L[i-1][j]))
   LCS = []
-  while i > 0 or j > 0:
+  i,j = len(x)-1,len(y)-1
+  while i >= 0 and j >= 0:
     if x[i] == y[j]:
       LCS.append(x[i])
       i -= 1
       j -= 1
-    elif lcs[i-1][j] > lcs[i][j-1]:
+    elif L[i-1][j] > L[i][j-1]:
       i -= 1
     else:
       j -= 1
-
-  if x[i]==y[j]:
-    LCS.append(x[i])
   LCS.reverse()
   return np.array(LCS)
-print(lcs([0, 5, 3, 9, 3, 3, 8, 4, 2, 5],[9, 0, 7, 6, 5, 0, 3, 7, 1, 0]))
+#print(lcs([0, 5, 3, 9, 3, 3, 8, 4, 2, 5],[9, 0, 7, 6, 5, 0, 3, 7, 1, 0]))
