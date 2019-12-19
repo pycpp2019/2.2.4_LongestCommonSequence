@@ -1,16 +1,18 @@
 import numpy as np
-def lcs_bf(x,y):
+def lcs_bf1(x,y):
   if len(x) == 0 or len(y) == 0:
     return []
   if x[-1] == y[-1]:
-    return lcs_bf(x[:-1], y[:-1]) + [x[-1]]
+    return lcs_bf1(x[:-1], y[:-1]) + [x[-1]]
   else:
-    l = lcs_bf(x[:-1], y)
-    r = lcs_bf(x, y[:-1])
+    l = lcs_bf1(x[:-1], y)
+    r = lcs_bf1(x, y[:-1])
     if len(l) >= len(r):
       return l
     else:
       return r
+def lcs_bf(x,y):
+  return np.array(lcs_bf1(x,y))
 
 
 def lcs(x,y):
@@ -37,4 +39,5 @@ def lcs(x,y):
     else:
       j -= 1
   LCS.reverse()
-  return LCS
+  return np.array(LCS)
+#print(lcs_bf([1,1,1,1],[2,1,2,1]))
