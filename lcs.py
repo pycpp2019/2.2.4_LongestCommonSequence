@@ -29,7 +29,7 @@ def lcs(x,y):
   i = len(x)-1
   j = len(y)-1
   LCS = []
-  while i >= 0 or j >= 0:
+  while i > 0 or j > 0:
     if x[i] == y[j]:
       LCS.append(x[i])
       i -= 1
@@ -38,6 +38,9 @@ def lcs(x,y):
       i -= 1
     else:
       j -= 1
+
+  if x[i]==y[j]:
+    LCS.append(x[i])
   LCS.reverse()
   return np.array(LCS)
-#print(lcs([0, 5, 3, 9, 3, 3, 8, 4, 2, 5],[9, 0, 7, 6, 5, 0, 3, 7, 1, 0]))
+print(lcs([0, 5, 3, 9, 3, 3, 8, 4, 2, 5],[9, 0, 7, 6, 5, 0, 3, 7, 1, 0]))
