@@ -26,18 +26,19 @@ def lcs(x,y):
           lcs[i][j] = lcs[i-1][j]
         else:
           lcs[i][j] = lcs[i][j-1]
-  LCS = []
   i = len(x)-1
   j = len(y)-1
+  LCS = np.zeros(lcs[i][j]+1,dtype=int)
+  k=lcs[i][j]
   while i >= 0 and j >= 0:
     if x[i] == y[j]:
-      LCS.append(x[i])
+      LCS[k]=x[i]
+      k-=1
       i -= 1
       j -= 1
     elif lcs[i-1][j] > lcs[i][j-1]:
       i -= 1
     else:
       j -= 1
-  LCS.reverse()
-  return np.array(LCS)
-#print(lcs_bf([1,1,1,1],[2,1,2,1]))
+  return LCS
+#print(lcs([1,1,1,1],[2,1,2,1]))
